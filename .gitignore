@@ -201,3 +201,5 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# added manually
+.idea/

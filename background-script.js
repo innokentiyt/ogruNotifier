@@ -1,5 +1,6 @@
 const DOMAIN = "https://www.old-games.ru"
 const FORUM = "https://www.old-games.ru/forum/"
+const SMALL_PAGE = "https://www.old-games.ru/forum/misc/contact"
 const NOTIFICATIONS_PAGE = "https://www.old-games.ru/forum/account/alerts"
 
 /* periodic refresh logic START */
@@ -14,6 +15,8 @@ function getCookie(name) {
     });
 }
 
+const NO_PAGE = "NO_PAGE"
+
 async function getForumMainPage(myCookie) {
     let myHeaders = new Headers()
     myHeaders.append("Cookie", "xf_user=" + myCookie.value + ";")
@@ -21,37 +24,28 @@ async function getForumMainPage(myCookie) {
         method: 'GET',
         headers: myHeaders,
     };
-    let myRequest = new Request(FORUM, myInit);
+    let myRequest = new Request(SMALL_PAGE, myInit);
     try {
         let response = await fetch(myRequest)
         if (response.ok) {
-            //console.log(response.headers.get("content-length"))
             return response.text()
         } else {
-            //console.log(response.headers)
-            return "NO_PAGE"
+            return NO_PAGE
         }
-    } catch(error) {
-        //console.error('getForumMainPage error:', error);
-    }
+    } catch(error) {}
 }
 
+const NOTIFICATION_COUNT_CONTAINER_REGEXP = /<\s*strong[^>]*id="VisitorExtraMenu_AlertsCounter">(\s*)(.*?)(\s*)<\s*\/\s*strong>/ms;
+const NOTIFICATION_COUNT_REGEXP = /\d+/g;
+
 async function refreshNotifications(alarmInfo) {
-    //console.log("on alarm: " + alarmInfo.name);
-    var xf_user_cookie = await getCookie("xf_user");
+    let xf_user_cookie = await getCookie("xf_user");
     if (xf_user_cookie) {
-        //console.log(xf_user_cookie.expirationDate);
         let forumMainPage = await getForumMainPage(xf_user_cookie);
-        if (forumMainPage === "NO_PAGE") {
-            //console.log(forumMainPage);
-        } else {
-            //console.log("page got!");
-            let notificationCountContainerRegexp = /<\s*strong[^>]*id="VisitorExtraMenu_AlertsCounter">(\s*)(.*?)(\s*)<\s*\/\s*strong>/ms;
-            let notificationCountContainer = forumMainPage.match(notificationCountContainerRegexp)[2];
-            let notificationCountRegexp = /\d+/g;
-            let notificationCount = notificationCountContainer.match(notificationCountRegexp);
-            //console.log("the container is " + notificationCountContainer);
-            console.log("the count is " + notificationCount);
+        if (forumMainPage !== NO_PAGE) {
+            let notificationCountContainer = forumMainPage.match(NOTIFICATION_COUNT_CONTAINER_REGEXP)[2];
+            let notificationCount = notificationCountContainer.match(NOTIFICATION_COUNT_REGEXP);
+            //console.log("the count is " + notificationCount);
             if (notificationCount > 0) {
                 browser.browserAction.setBadgeText({text: notificationCount.toString()});
             }
