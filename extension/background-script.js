@@ -70,7 +70,7 @@ function openNotificationsPage() {
     browser.browserAction.setBadgeText({text: ""});
 }
 
-browser.browserAction.setBadgeBackgroundColor({color: "red"});
+browser.browserAction.setBadgeBackgroundColor({color: [217, 0, 0, 255]});
 browser.browserAction.onClicked.addListener(openNotificationsPage);
 
 /* browser action logic END */
