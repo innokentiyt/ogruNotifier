@@ -17,7 +17,7 @@ function getCookie(name) {
 
 const NO_PAGE = "NO_PAGE"
 
-async function getForumMainPage(myCookie) {
+async function getForumPage(myCookie) {
     let myHeaders = new Headers()
     myHeaders.append("Cookie", "xf_user=" + myCookie.value + ";")
     let myInit = {
@@ -41,7 +41,7 @@ const NOTIFICATION_COUNT_REGEXP = /\d+/g;
 async function refreshNotifications(alarmInfo) {
     let xf_user_cookie = await getCookie("xf_user");
     if (xf_user_cookie) {
-        let forumMainPage = await getForumMainPage(xf_user_cookie);
+        let forumMainPage = await getForumPage(xf_user_cookie);
         if (forumMainPage !== NO_PAGE) {
             let notificationCountContainer = forumMainPage.match(NOTIFICATION_COUNT_CONTAINER_REGEXP)[2];
             let notificationCount = notificationCountContainer.match(NOTIFICATION_COUNT_REGEXP);
@@ -70,6 +70,7 @@ function openNotificationsPage() {
     browser.browserAction.setBadgeText({text: ""});
 }
 
+browser.browserAction.setBadgeBackgroundColor({color: "red"});
 browser.browserAction.onClicked.addListener(openNotificationsPage);
 
 /* browser action logic END */
