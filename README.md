@@ -4,6 +4,8 @@
 
 Использует существующий логин в браузере, чтобы получить счетчик. Периодичность проверки - 5 минут, пока не настраивается.
 
+<a href="https://addons.mozilla.org/ru/firefox/addon/ogrunotifier/" target="_blank"><img src="https://user-images.githubusercontent.com/585534/107280546-7b9b2a00-6a26-11eb-8f9f-f95932f4bfec.png" alt="Скачать для Firefox"></a> <a href="https://example.com" target="_blank"><img src="https://user-images.githubusercontent.com/585534/107280622-91a8ea80-6a26-11eb-8d07-77c548b28665.png" alt="Скачать для Chrome"></a>
+
 #### Совместимость
 - Firefox 48+
 - Chrome 80+ (страница в Chrome Web Store повится в скором времени)
