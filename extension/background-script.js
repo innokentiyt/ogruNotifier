@@ -3,6 +3,9 @@ const FORUM = "https://www.old-games.ru/forum/"
 const SMALL_PAGE = "https://www.old-games.ru/forum/misc/contact"
 const NOTIFICATIONS_PAGE = "https://www.old-games.ru/forum/account/alerts"
 
+const ACTIVE_BADGE_COLOR = [217, 0, 0, 255]
+const STRANGE_BADGE_COLOR = "gray"
+
 /* periodic refresh logic START */
 
 const INITIAL_DELAY = 0.1; // min
@@ -35,21 +38,48 @@ async function getForumPage(myCookie) {
     } catch(error) {}
 }
 
+function setStrangeBadge() {
+    browser.browserAction.setBadgeBackgroundColor({color: STRANGE_BADGE_COLOR});
+    browser.browserAction.setBadgeText({text: "?"});
+}
+
+function setActiveBadge(count) {
+    browser.browserAction.setBadgeBackgroundColor({color: ACTIVE_BADGE_COLOR});
+    browser.browserAction.setBadgeText({text: count.toString()});
+}
+
+function setInactiveBadge() {
+    browser.browserAction.setBadgeText({text: ""});
+}
+
 const NOTIFICATION_COUNT_CONTAINER_REGEXP = /<\s*strong[^>]*id="VisitorExtraMenu_AlertsCounter">(\s*)(.*?)(\s*)<\s*\/\s*strong>/ms;
 const NOTIFICATION_COUNT_REGEXP = /\d+/g;
 
 async function refreshNotifications(alarmInfo) {
     let xf_user_cookie = await getCookie("xf_user");
     if (xf_user_cookie) {
-        let forumMainPage = await getForumPage(xf_user_cookie);
-        if (forumMainPage !== NO_PAGE) {
-            let notificationCountContainer = forumMainPage.match(NOTIFICATION_COUNT_CONTAINER_REGEXP)[2];
-            let notificationCount = notificationCountContainer.match(NOTIFICATION_COUNT_REGEXP);
-            //console.log("the count is " + notificationCount);
-            if (notificationCount > 0) {
-                browser.browserAction.setBadgeText({text: notificationCount.toString()});
+        let forumPage = await getForumPage(xf_user_cookie);
+        if (forumPage !== NO_PAGE) {
+            let notificationCountContainer = forumPage.match(NOTIFICATION_COUNT_CONTAINER_REGEXP)[2];
+            try {
+                let notificationCount = notificationCountContainer.match(NOTIFICATION_COUNT_REGEXP)[0];
+                //console.log("the count is " + notificationCount);
+                if (notificationCount != 0) {
+                    setActiveBadge(notificationCount);
+                } else {
+                    setInactiveBadge();
+                }
+            } catch(error) {
+                // the counter is not a number
+                setStrangeBadge();
             }
+        } else {
+            // didn't receive forum page
+            setStrangeBadge();
         }
+    } else {
+        // no user's login cookie found
+        setStrangeBadge();
     }
 }
 
@@ -67,10 +97,9 @@ browser.alarms.onAlarm.addListener(refreshNotifications);
 
 function openNotificationsPage() {
     browser.tabs.create({url: NOTIFICATIONS_PAGE});
-    browser.browserAction.setBadgeText({text: ""});
+    setInactiveBadge();
 }
 
-browser.browserAction.setBadgeBackgroundColor({color: [217, 0, 0, 255]});
 browser.browserAction.onClicked.addListener(openNotificationsPage);
 
 /* browser action logic END */
