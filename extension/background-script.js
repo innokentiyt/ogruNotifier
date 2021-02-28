@@ -97,9 +97,25 @@ browser.alarms.onAlarm.addListener(refreshNotifications);
 
 function openNotificationsPage() {
     browser.tabs.create({url: NOTIFICATIONS_PAGE});
-    setInactiveBadge();
 }
 
 browser.browserAction.onClicked.addListener(openNotificationsPage);
 
 /* browser action logic END */
+
+
+/* auto reset badge logic START */
+
+function autoResetBadgeCallback(responseDetails) {
+    if (responseDetails.statusCode === 200) {
+        setInactiveBadge();
+    }
+}
+
+const ALERTS_POPUP_ENDPOINT = "https://www.old-games.ru/forum/account/alerts-popup*";
+
+browser.webRequest.onCompleted.addListener(autoResetBadgeCallback, {
+    urls: [NOTIFICATIONS_PAGE, ALERTS_POPUP_ENDPOINT]
+});
+
+/* auto reset badge logic END */

@@ -13,7 +13,8 @@
     "*://www.old-games.ru/*",
     "tabs",
     "alarms",
-    "cookies"
+    "cookies",
+    "webRequest"
   ],
 
   "background": {
