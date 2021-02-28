@@ -52,7 +52,7 @@ function setInactiveBadge() {
     browser.browserAction.setBadgeText({text: ""});
 }
 
-const NOTIFICATION_COUNT_CONTAINER_REGEXP = /<\s*strong[^>]*id="VisitorExtraMenu_AlertsCounter">(\s*)(.*?)(\s*)<\s*\/\s*strong>/ms;
+const NOTIFICATION_COUNT_CONTAINER_REGEXP = /<\s*strong[^>]*id="VisitorExtraMenu_AlertsCounter">(\s*)(.*?)(\s*)<\s*\/\s*strong>/m;
 const NOTIFICATION_COUNT_REGEXP = /\d+/g;
 
 async function refreshNotifications(alarmInfo) {
