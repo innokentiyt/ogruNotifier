@@ -1,26 +1,18 @@
 # ogruNotifier
 
-Браузерное дополнение — счетчик непрочитанных оповещений для форума https://www.old-games.ru/forum/. Proof of Concept.
+Браузерное дополнение — счетчик непрочитанных оповещений для форума https://www.old-games.ru/forum/.
 
-Использует существующий логин в браузере, чтобы получить счетчик. Периодичность проверки - 5 минут, пока не настраивается.
+Использует существующий логин в браузере, чтобы получить счетчик. Периодичность проверки - 5 минут.
 
 <a href="https://addons.mozilla.org/firefox/addon/ogrunotifier/" target="_blank"><img src="https://user-images.githubusercontent.com/585534/107280546-7b9b2a00-6a26-11eb-8f9f-f95932f4bfec.png" alt="Скачать для Firefox"></a> <a href="https://chrome.google.com/webstore/detail/ogrunotifier/pdiigojcibmmfcegbfckpcbphooppjfn" target="_blank"><img src="https://user-images.githubusercontent.com/585534/107280622-91a8ea80-6a26-11eb-8d07-77c548b28665.png" alt="Скачать для Chrome"></a>
 
 #### Совместимость
 - Firefox 48+
-- Chrome 66+
-
-Совместимость с Chrome реализуется с помощью слоя совместимости [WebExtension browser API Polyfill от Mozilla](https://github.com/mozilla/webextension-polyfill).
-
+- Chrome 88+ (Manifest V3)
 #### Настройка окружения разработки
-Первоначальная настройка простая, есть 2 варианта:
-- при наличии установленного Node.js и npm исполнить команду `npm install` в корневой папке - это скачает и поместит в папку `./extension` последнюю версию `browser-polyfill.js` из npm
-- скачать `browser-polyfill.js` самостоятельно и поместить его в папку `./extension`
-
 Для отладки и тестирования см. соответствующие инструкции:
 - Firefox: https://extensionworkshop.com/documentation/develop/temporary-installation-in-firefox/
-- Chrome: https://developer.chrome.com/docs/extensions/mv2/tut_debugging/
-
+- Chrome: https://developer.chrome.com/docs/extensions/mv3/tut_debugging/
 ### TODO
 - Настраиваемая периодичность проверки
 - Уменьшить потребление трафика
@@ -38,3 +30,7 @@
 - Первый релиз на CWS (Chrome Web Store)
 - Убрана лишняя привилегия tabs
 - Добавлен авто-сброс бейджа со счетчиком, если пользователь или браузер открывают страницу или выпадающее меню оповещений самостоятельно
+
+### 1.1.1
+- Временный отказ от browser-polyfill.js
+- Переход на Manifest V3 для Chrome, минимальная поддерживаемая версия Chrome - 88
