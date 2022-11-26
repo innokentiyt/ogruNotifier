@@ -6,50 +6,76 @@ const NOTIFICATIONS_PAGE = "https://www.old-games.ru/forum/account/alerts"
 const ACTIVE_BADGE_COLOR = [217, 0, 0, 255]
 const STRANGE_BADGE_COLOR = "gray"
 
+/* extension api selector START */
+
+let api;
+let apiBrowserAction;
+
+if (isFirefox()) {
+    api = browser;
+    apiBrowserAction = browser.browserAction;
+} else if (isChrome()) {
+    api = chrome;
+    apiBrowserAction = chrome.action;
+}
+
+function isFirefox() {
+    return (
+        typeof browser !== "undefined" && typeof browser.runtime !== "undefined"
+    );
+}
+
+function isChrome() {
+    return typeof chrome !== "undefined" && typeof chrome.runtime !== "undefined";
+}
+
+/* extension api selector END */
+
+
 /* periodic refresh logic START */
 
 const INITIAL_DELAY = 0.1; // min
 const PERIOD = 5; // min
 
 function getCookie(name) {
-    return chrome.cookies.get({
+    return api.cookies.get({
         url: DOMAIN,
         name: name,
     });
 }
 
-const NO_PAGE = "NO_PAGE"
+const NO_PAGE = "NO_PAGE";
 
 async function getForumPage(myCookie) {
-    let myHeaders = new Headers()
-    myHeaders.append("Cookie", "xf_user=" + myCookie.value + ";")
+    let myHeaders = new Headers();
+    myHeaders.append("Cookie", "xf_user=" + myCookie.value + ";");
     let myInit = {
         method: 'GET',
         headers: myHeaders,
     };
     let myRequest = new Request(SMALL_PAGE, myInit);
     try {
-        let response = await fetch(myRequest)
+        let response = await fetch(myRequest);
         if (response.ok) {
-            return response.text()
+            return response.text();
         } else {
-            return NO_PAGE
+            return NO_PAGE;
         }
     } catch(error) {}
 }
 
 function setStrangeBadge() {
-    chrome.action.setBadgeBackgroundColor({color: STRANGE_BADGE_COLOR});
-    chrome.action.setBadgeText({text: "?"});
+    apiBrowserAction.setBadgeBackgroundColor({color: STRANGE_BADGE_COLOR});
+    apiBrowserAction.setBadgeText({text: "?"});
 }
 
 function setActiveBadge(count) {
-    chrome.action.setBadgeBackgroundColor({color: ACTIVE_BADGE_COLOR});
-    chrome.action.setBadgeText({text: count.toString()});
+    apiBrowserAction.setBadgeBackgroundColor({color: ACTIVE_BADGE_COLOR});
+    apiBrowserAction.setBadgeText({text: count.toString()});
 }
 
 function setInactiveBadge() {
-    chrome.action.setBadgeText({text: ""});
+    apiBrowserAction.setBadgeText({text: ""});
 }
 
 const NOTIFICATION_COUNT_CONTAINER_REGEXP = /<\s*strong[^>]*id="VisitorExtraMenu_AlertsCounter">(\s*)(.*?)(\s*)<\s*\/\s*strong>/m;
@@ -83,25 +109,25 @@ async function refreshNotifications(alarmInfo) {
     }
 }
 
-chrome.alarms.create("refreshNotifications", {
+api.alarms.create("refreshNotifications", {
     delayInMinutes: INITIAL_DELAY,
     periodInMinutes: PERIOD
 });
 
-chrome.alarms.onAlarm.addListener(refreshNotifications);
+api.alarms.onAlarm.addListener(refreshNotifications);
 
 /* periodic refresh logic END */
 
 
-/* chrome action logic START */
+/* browser/chrome action logic START */
 
 function openNotificationsPage() {
-    chrome.tabs.create({url: NOTIFICATIONS_PAGE});
+    api.tabs.create({url: NOTIFICATIONS_PAGE});
 }
 
-chrome.action.onClicked.addListener(openNotificationsPage);
+apiBrowserAction.onClicked.addListener(openNotificationsPage);
 
-/* chrome action logic END */
+/* browser/chrome action logic END */
 
 
 /* auto reset badge logic START */
@@ -114,7 +140,7 @@ function autoResetBadgeCallback(responseDetails) {
 
 const ALERTS_POPUP_ENDPOINT = "https://www.old-games.ru/forum/account/alerts-popup*";
 
-chrome.webRequest.onCompleted.addListener(autoResetBadgeCallback, {
+api.webRequest.onCompleted.addListener(autoResetBadgeCallback, {
     urls: [NOTIFICATIONS_PAGE, ALERTS_POPUP_ENDPOINT]
 });
 

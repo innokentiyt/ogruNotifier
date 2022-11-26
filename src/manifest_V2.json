@@ -1,8 +1,8 @@
 {
   "description": "Notifications counter from Old-Games.RU forum",
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "ogruNotifier",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "homepage_url": "https://github.com/innokentiyt/ogruNotifier",
   "icons": {
     "48": "icons/ogru-48.png",
@@ -10,20 +10,19 @@
   },
 
   "permissions": [
+    "*://www.old-games.ru/*",
     "alarms",
     "cookies",
     "webRequest"
   ],
-  
-  "host_permissions": [
-    "*://www.old-games.ru/*"
-  ],
 
   "background": {
-    "service_worker": "service-worker.js"
+    "scripts": [
+      "background-script.js"
+    ]
   },
 
-  "action": {
+  "browser_action": {
     "default_icon": {
       "32": "icons/ogru-32.png",
       "48": "icons/ogru-48.png"

@@ -203,7 +203,8 @@ dist
 
 # added manually
 .idea/
+dist/
 browser-polyfill.js
-extension.zip
-extension.xpi
-extension.crx
+*.zip
+*.xpi
+*.crx
