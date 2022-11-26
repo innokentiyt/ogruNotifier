@@ -1,7 +1,12 @@
 const path = require('path');
 const CopyPlugin = require("copy-webpack-plugin");
 
-const commonFiles = ["icons/ogru-32.png", "icons/ogru-48.png"];
+const commonFiles = [
+    "icons/ogru-32.png",
+    "icons/ogru-48.png",
+    "options.html",
+    "options.js",
+];
 
 const copyPluginCommonFilesPatterns = commonFiles.map((commonFile) => [
     {

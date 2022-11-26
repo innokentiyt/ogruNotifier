@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <div>
+        <p>
+            <label for="refreshPeriod">Notifications refresh period: </label>
+            <select id="refreshPeriod">
+                <option value="3">3 minutes</option>
+                <option value="5">5 minutes (default)</option>
+                <option value="10">10 minutes</option>
+            </select>
+        </p>
+        <p>
+            <input type="checkbox" id="includeInboxAlerts" />
+            <label for="includeInboxAlerts">Include inbox alerts (beta)</label>
+        </p>
+    </div>
+    <script src="options.js"></script>
+</body>
+</html>
