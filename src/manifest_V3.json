@@ -12,12 +12,18 @@
   "permissions": [
     "alarms",
     "cookies",
-    "webRequest"
+    "webRequest",
+    "storage"
   ],
 
   "host_permissions": [
     "*://www.old-games.ru/*"
   ],
+
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
 
   "background": {
     "service_worker": "service-worker.js"
