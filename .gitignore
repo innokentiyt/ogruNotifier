@@ -208,3 +208,4 @@ browser-polyfill.js
 *.zip
 *.xpi
 *.crx
+*~lock*

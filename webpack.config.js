@@ -1,14 +1,15 @@
 const path = require('path');
 const CopyPlugin = require("copy-webpack-plugin");
 
-const commonFiles = [
+const commonFilesAndDirectories = [
     "icons/ogru-32.png",
     "icons/ogru-48.png",
     "options.html",
     "options.js",
+    "_locales/"
 ];
 
-const copyPluginCommonFilesPatterns = commonFiles.map((commonFile) => [
+const copyCommonFilesPatterns = commonFilesAndDirectories.map((commonFile) => [
     {
         from: `./src/${commonFile}`,
         to: `./chrome/${commonFile}`,
@@ -19,7 +20,7 @@ const copyPluginCommonFilesPatterns = commonFiles.map((commonFile) => [
     },
 ]).flat();
 
-const copyPluginManifestsPatterns = [
+const copyManifestsPatterns = [
     {
         from: "./src/manifest_V3.json",
         to: "./chrome/manifest.json",
@@ -48,7 +49,7 @@ module.exports = {
 
     plugins: [
         new CopyPlugin({
-            patterns: [].concat(copyPluginCommonFilesPatterns, copyPluginManifestsPatterns, copyScriptPatterns)
+            patterns: [].concat(copyCommonFilesPatterns, copyManifestsPatterns, copyScriptPatterns)
         }),
     ],
 };

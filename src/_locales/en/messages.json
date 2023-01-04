@@ -1,0 +1,46 @@
+{
+  "extensionDescription": {
+    "message": "Notifications counter from Old-Games.RU forum",
+    "description": "Description of the extension"
+  },
+
+  "optionsNotificationsRefreshPeriod": {
+    "message": "Notifications refresh period: ",
+    "description": "Label for notification refresh period selector option"
+  },
+
+  "optionsNotificationsRefreshPeriod3m": {
+    "message": "3 minutes",
+    "description": "Text for 3 minutes value"
+  },
+
+  "optionsNotificationsRefreshPeriod5m": {
+    "message": "5 minutes (default)",
+    "description": "Text for 5 minutes value, the default option"
+  },
+
+  "optionsNotificationsRefreshPeriod10m": {
+    "message": "10 minutes",
+    "description": "Text for 10 minutes value"
+  },
+
+  "optionsIncludeInboxAlerts": {
+    "message": "Include inbox alerts",
+    "description": "Label for include inbox alerts option"
+  },
+
+  "scriptStrangeBadgeTitle": {
+    "message": "An error occurred while trying to refresh notifications. Please, check if you logged in or wait if it's a network error.",
+    "description": "Title for strange badge"
+  },
+
+  "scriptBadgeTitleForumNotifications": {
+    "message": "Forum notifications",
+    "description": "Title for forum notifications counter badge"
+  },
+
+  "scriptBadgeTitleUnreadConversations": {
+    "message": "Unread conversations",
+    "description": "Title for unread conversations counter badge"
+  }
+}

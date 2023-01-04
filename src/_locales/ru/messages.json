@@ -1,0 +1,46 @@
+{
+  "extensionDescription": {
+    "message": "Счетчик оповещений из форума Old-Games.RU",
+    "description": "Описание расширения"
+  },
+
+  "optionsNotificationsRefreshPeriod": {
+    "message": "Периодичность проверки оповещений: ",
+    "description": "Описание (label) для опции выбора периодичности проверки оповещений"
+  },
+
+  "optionsNotificationsRefreshPeriod3m": {
+    "message": "3 минуты",
+    "description": "Текст для значения в 3 минуты"
+  },
+
+  "optionsNotificationsRefreshPeriod5m": {
+    "message": "5 минут (по умолчанию)",
+    "description": "Текст для значения в 5 минут, опция по умолчанию"
+  },
+
+  "optionsNotificationsRefreshPeriod10m": {
+    "message": "10 минут",
+    "description": "Текст для значения в 10 минут"
+  },
+
+  "optionsIncludeInboxAlerts": {
+    "message": "Также проверять оповещения новых переписок",
+    "description": "Описание (label) для опции включения оповещений новых переписок"
+  },
+
+  "scriptStrangeBadgeTitle": {
+    "message": "Ошибка при обновлении оповещений. Пожалуйста, проверьте, что вы уже залогинены на форуме, или подождите, если это ошибка сети",
+    "description": "Всплывающая подсказка для странного бейджа"
+  },
+
+  "scriptBadgeTitleForumNotifications": {
+    "message": "Оповещения из форума",
+    "description": "Всплывающая подсказка для счетчика оповещений из форума в бейдже"
+  },
+
+  "scriptBadgeTitleUnreadConversations": {
+    "message": "Непрочитанные переписки",
+    "description": "Всплывающая подсказка для счетчика непрочитанных переписок в бейдже"
+  }
+}

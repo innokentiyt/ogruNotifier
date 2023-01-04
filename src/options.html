@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8" />
 </head>
@@ -8,16 +8,16 @@
 <body>
     <div>
         <p>
-            <label for="refreshPeriod">Notifications refresh period: </label>
+            <label for="refreshPeriod" data-locale="optionsNotificationsRefreshPeriod">Notifications refresh period: </label>
             <select id="refreshPeriod">
-                <option value="3">3 minutes</option>
-                <option value="5">5 minutes (default)</option>
-                <option value="10">10 minutes</option>
+                <option value="3" data-locale="optionsNotificationsRefreshPeriod3m">3 minutes</option>
+                <option value="5" data-locale="optionsNotificationsRefreshPeriod5m">5 minutes (default)</option>
+                <option value="10" data-locale="optionsNotificationsRefreshPeriod10m">10 minutes</option>
             </select>
         </p>
         <p>
             <input type="checkbox" id="includeInboxAlerts" />
-            <label for="includeInboxAlerts">Include inbox alerts (beta)</label>
+            <label for="includeInboxAlerts" data-locale="optionsIncludeInboxAlerts">Include inbox alerts (beta)</label>
         </p>
     </div>
     <script src="options.js"></script>

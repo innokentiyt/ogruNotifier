@@ -78,15 +78,15 @@ async function getForumPage(myCookie) {
 function setStrangeBadge() {
     apiBrowserAction.setBadgeBackgroundColor({color: STRANGE_BADGE_COLOR});
     apiBrowserAction.setBadgeText({text: "?"});
-    apiBrowserAction.setTitle({title: "Error occured while trying to refresh notifications. Please, check if you logged in or wait if it's a network error."})
+    apiBrowserAction.setTitle({title: api.i18n.getMessage("scriptStrangeBadgeTitle")})
 }
 
 function updateBadgeValue() {
     const newValue = notificationCount + newConversationsCount;
     if (newValue != 0) {
-        let badgeTitle = `Forum notifications: ${notificationCount}`;
+        let badgeTitle = api.i18n.getMessage("scriptBadgeTitleForumNotifications") + `: ${notificationCount}`;
         if (newConversationsCount > 0) {
-            badgeTitle = `${badgeTitle}\nUnread conversations: ${newConversationsCount}`;
+            badgeTitle = `${badgeTitle}\n` + api.i18n.getMessage("scriptBadgeTitleUnreadConversations") + `: ${newConversationsCount}`;
         }
         apiBrowserAction.setBadgeBackgroundColor({color: ACTIVE_BADGE_COLOR});
         apiBrowserAction.setBadgeText({text: newValue.toString()});
