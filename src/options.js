@@ -77,6 +77,11 @@
         });
     }
 
+    // i18n trick for html
+    document.querySelectorAll('[data-locale]').forEach(elem => {
+      elem.innerText = getExtensionApi().i18n.getMessage(elem.dataset.locale)
+    })
+
     document.addEventListener("DOMContentLoaded", function() {
         restoreOptions();
         document.querySelectorAll("input,select").forEach(

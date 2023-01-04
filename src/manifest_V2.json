@@ -1,13 +1,15 @@
 {
-  "description": "Notifications counter from Old-Games.RU forum",
+  "description": "__MSG_extensionDescription__",
   "manifest_version": 2,
   "name": "ogruNotifier",
-  "version": "1.1.2",
+  "version": "1.2.1",
   "homepage_url": "https://github.com/innokentiyt/ogruNotifier",
   "icons": {
     "48": "icons/ogru-48.png",
     "32": "icons/ogru-32.png"
   },
+
+  "default_locale": "en",
 
   "permissions": [
     "*://www.old-games.ru/*",
