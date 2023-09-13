@@ -11,8 +11,8 @@
 - Chrome 88+ (Manifest V3)
 
 #### Настройка окружения разработки
-- Скачать зависимости для сборки: `npm install`
 - Сформировать дистрибутивы для браузеров: `npm run build`
+  - Node.js v16.7.0+
 - Соответствующие инструкции для отладки и тестирования:
   - Firefox: https://extensionworkshop.com/documentation/develop/temporary-installation-in-firefox/
   - Chrome: https://developer.chrome.com/docs/extensions/mv3/tut_debugging/
