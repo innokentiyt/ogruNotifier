@@ -14,26 +14,9 @@ function myConsoleLog(log) {
 
 /* extension api selector START */
 
-let api;
-let apiBrowserAction;
+const api = globalThis.browser ?? globalThis.chrome;
 
-if (isFirefox()) {
-    api = browser;
-    apiBrowserAction = browser.browserAction;
-} else if (isChrome()) {
-    api = chrome;
-    apiBrowserAction = chrome.action;
-}
-
-function isFirefox() {
-    return (
-        typeof browser !== "undefined" && typeof browser.runtime !== "undefined"
-    );
-}
-
-function isChrome() {
-    return typeof chrome !== "undefined" && typeof chrome.runtime !== "undefined";
-}
+const apiBrowserAction = api.action ?? api.browserAction;
 
 /* extension api selector END */
 
