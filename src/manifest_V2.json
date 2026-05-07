@@ -2,7 +2,7 @@
   "description": "__MSG_extensionDescription__",
   "manifest_version": 2,
   "name": "ogruNotifier",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "homepage_url": "https://github.com/innokentiyt/ogruNotifier",
   "icons": {
     "48": "icons/ogru-48.png",
@@ -21,8 +21,7 @@
 
   "options_ui": {
     "page": "options.html",
-    "open_in_tab": false,
-    "browser_style": true
+    "open_in_tab": false
   },
 
   "background": {
@@ -37,5 +36,14 @@
       "48": "icons/ogru-48.png"
     },
     "default_title": "Old-Games.RU Notifier"
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{ee2f5211-1f96-439e-a18e-a509874706c5}",
+      "data_collection_permissions": {
+        "required": [ "none" ]
+      }
+    }
   }
 }

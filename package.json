@@ -1,6 +1,6 @@
 {
   "name": "ogru-notifier",
-  "version": "1.2.2",
+  "version": "1.2.4",
   "description": "ogruNotifier Web Extension accompanying package.json",
   "main": "src/script.js",
   "repository": {
