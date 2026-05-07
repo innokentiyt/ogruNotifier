@@ -43,8 +43,7 @@
       "id": "{ee2f5211-1f96-439e-a18e-a509874706c5}",
       "data_collection_permissions": {
         "required": [ "none" ]
-      },
-      "strict_min_version": "58.0"
+      }
     }
   }
 }
