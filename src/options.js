@@ -1,20 +1,6 @@
 (function() {
     function getExtensionApi() {
-        if (isFirefox()) {
-            return browser;
-        } else if (isChrome()) {
-            return chrome;
-        }
-    }
-
-    function isChrome() {
-        return typeof chrome !== "undefined" && typeof chrome.runtime !== "undefined";
-    }
-    
-    function isFirefox() {
-        return (
-            typeof browser !== "undefined" && typeof browser.runtime !== "undefined"
-        );
+        return globalThis.browser ?? globalThis.chrome;
     }
 
     function myConsoleLog(log) {
