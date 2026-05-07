@@ -14,26 +14,9 @@ function myConsoleLog(log) {
 
 /* extension api selector START */
 
-let api;
-let apiBrowserAction;
+const api = globalThis.browser ?? globalThis.chrome;
 
-if (isFirefox()) {
-    api = browser;
-    apiBrowserAction = browser.browserAction;
-} else if (isChrome()) {
-    api = chrome;
-    apiBrowserAction = chrome.action;
-}
-
-function isFirefox() {
-    return (
-        typeof browser !== "undefined" && typeof browser.runtime !== "undefined"
-    );
-}
-
-function isChrome() {
-    return typeof chrome !== "undefined" && typeof chrome.runtime !== "undefined";
-}
+const apiBrowserAction = api.action ?? api.browserAction;
 
 /* extension api selector END */
 
@@ -55,7 +38,8 @@ function getCookie(name) {
     });
 }
 
-const NO_PAGE = "NO_PAGE";
+const RESPONSE_NOT_OK = "RESPONSE_NOT_OK";
+const FETCH_ERROR = "FETCH_ERROR";
 
 async function getForumPage(myCookie) {
     let myHeaders = new Headers();
@@ -70,9 +54,11 @@ async function getForumPage(myCookie) {
         if (response.ok) {
             return response.text();
         } else {
-            return NO_PAGE;
+            return RESPONSE_NOT_OK;
         }
-    } catch(error) {}
+    } catch(error) {
+        return FETCH_ERROR;
+    }
 }
 
 function setStrangeBadge() {
@@ -105,26 +91,32 @@ async function refreshNotifications() {
     let xf_user_cookie = await getCookie("xf_user");
     if (xf_user_cookie) {
         let forumPage = await getForumPage(xf_user_cookie);
-        if (forumPage !== NO_PAGE) {
-            let notificationCountContainer = forumPage.match(NOTIFICATION_COUNT_CONTAINER_REGEXP)[2];
-            let newConversationsCountContainer = forumPage.match(NEW_CONVERSATIONS_COUNT_CONTAINER_REGEXP)[2];
-            try {
-                notificationCount = Number(notificationCountContainer.match(COUNT_REGEXP)[0]);
-                if (includeInboxAlerts) {
-                    newConversationsCount = Number(newConversationsCountContainer.match(COUNT_REGEXP)[0]);
-                } else {
-                    newConversationsCount = 0;
-                }
-                myConsoleLog("notification count is " + notificationCount);
-                myConsoleLog("newConversations count is " + newConversationsCount);
-                updateBadgeValue();
-            } catch(error) {
-                // the counter is not a number
+        switch (forumPage) {
+            case RESPONSE_NOT_OK:
+                // response http status was not ok
                 setStrangeBadge();
-            }
-        } else {
-            // didn't receive forum page
-            setStrangeBadge();
+                break;
+            case FETCH_ERROR:
+                // browser fetch api error, ignore
+                myConsoleLog("browser fetch api error");
+                break;
+            default:
+                let notificationCountContainer = forumPage.match(NOTIFICATION_COUNT_CONTAINER_REGEXP)[2];
+                let newConversationsCountContainer = forumPage.match(NEW_CONVERSATIONS_COUNT_CONTAINER_REGEXP)[2];
+                try {
+                    notificationCount = Number(notificationCountContainer.match(COUNT_REGEXP)[0]);
+                    if (includeInboxAlerts) {
+                        newConversationsCount = Number(newConversationsCountContainer.match(COUNT_REGEXP)[0]);
+                    } else {
+                        newConversationsCount = 0;
+                    }
+                    myConsoleLog("notification count is " + notificationCount);
+                    myConsoleLog("newConversations count is " + newConversationsCount);
+                    updateBadgeValue();
+                } catch(error) {
+                    // the counter is not a number
+                    setStrangeBadge();
+                }
         }
     } else {
         // no user's login cookie found
